@@ -405,7 +405,7 @@ function ReportDetailScreen({ report: r, onBack }) {
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:8}}>
           {[
             {val:wAvg,lbl:"WHEEL AVG",bg:"#f0fdf4",col:"#16a34a"},
-            {val:`${r.busyness.score} — ${r.busyness.label}`,lbl:"LEVEL OF BUSY",bg:"#FFF2CC",col:C.teal},
+            {val:`${r.busyness.score} — ${r.busyness.label}`,lbl:"LEVEL OF BUSY",bg:"#e8f7fc",col:"#0d3d4f"},
           ].map((s,i)=>(
             <div key={i} style={{backgroundColor:s.bg,borderRadius:8,padding:"7px 8px",textAlign:"center"}}>
               <div style={{fontWeight:900,fontSize:i===1?12:20,color:s.col,lineHeight:1.1}}>{s.val}</div>
@@ -427,7 +427,7 @@ function ReportDetailScreen({ report: r, onBack }) {
                 {OPS_FIELDS.map(([key,label,emoji])=>(
                   <div key={key} style={{backgroundColor:"white",borderRadius:8,padding:"9px 10px",border:`1px solid ${C.border}`,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
                     <div>
-                      <div style={{fontWeight:900,fontSize:32,color:C.teal,lineHeight:1}}>{r.operations[key]??0}</div>
+                      <div style={{fontWeight:900,fontSize:32,color:"#0d3d4f",lineHeight:1}}>{r.operations[key]??0}</div>
                       <div style={{fontSize:10,fontWeight:700,color:C.muted,marginTop:3,lineHeight:1.3}}>{label.replace("Dogs in ","").replace(" on Site","")}</div>
                     </div>
                     <div style={{fontSize:28,lineHeight:1}}>{emoji}</div>
@@ -535,8 +535,8 @@ function HistoryScreen({ reports, onBack, onEdit }) {
                     <div style={{fontWeight:900,fontSize:18,color:"#16a34a"}}>{wAvg}</div>
                     <div style={{fontSize:9,color:C.muted,fontWeight:700}}>WHEEL</div>
                   </div>
-                  <div style={{backgroundColor:"#FFF2CC",borderRadius:10,padding:"6px 10px",textAlign:"center"}}>
-                    <div style={{fontWeight:900,fontSize:18,color:C.teal}}>{r.busyness.score}</div>
+                  <div style={{backgroundColor:"#e8f7fc",borderRadius:10,padding:"6px 10px",textAlign:"center"}}>
+                    <div style={{fontWeight:900,fontSize:18,color:"#0d3d4f"}}>{r.busyness.score}</div>
                     <div style={{fontSize:9,color:C.muted,fontWeight:700}}>BUSY</div>
                   </div>
                   <div style={{backgroundColor:"#fdf4ff",borderRadius:10,padding:"6px 10px",textAlign:"center"}}>
@@ -682,7 +682,7 @@ function App() {
   if (view==="history") return <HistoryScreen reports={reports} onBack={()=>setView("form")} onEdit={startEdit}/>;
   if (view==="detail" && lastReport) return <ReportDetailScreen report={lastReport} onBack={()=>{setView("form");setSubmitted(true);}}/>;
 
-  const C={teal:"#C4E9F4",tealMid:"#89DECE",tealLight:"#C4E9F4",pink:"#F4BD3F",bg:"#FFF2CC",card:"#ffffff",text:"#0f172a",muted:"#64748b",border:"#e2e8f0"};
+  const C={teal:"#C4E9F4",tealMid:"#89DECE",tealLight:"#C4E9F4",pink:"#F4BD3F",bg:"#e8f7fc",card:"#ffffff",text:"#0f172a",muted:"#64748b",border:"#e2e8f0"};
   const card={backgroundColor:C.card,borderRadius:16,padding:"18px 16px",boxShadow:"0 1px 8px rgba(0,0,0,0.06),0 0 0 1px rgba(0,0,0,0.03)",marginBottom:12};
   const inp={border:`1.5px solid ${C.border}`,borderRadius:10,padding:"10px 14px",fontSize:16,fontFamily:"inherit",width:"100%",outline:"none",boxSizing:"border-box",backgroundColor:"white",color:C.text};
   const pct=step===1?33:step===2?66:100;
@@ -699,7 +699,7 @@ function App() {
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {lastReport&&<button onClick={()=>setView("detail")} style={{backgroundColor:C.pink,color:"white",border:"none",borderRadius:12,padding:14,fontSize:16,fontWeight:800,cursor:"pointer",fontFamily:"inherit"}}>📲 Screenshot Format for Google Chat</button>}
           <button onClick={reset} style={{backgroundColor:C.teal,color:"white",border:"none",borderRadius:12,padding:14,fontSize:16,fontWeight:800,cursor:"pointer",fontFamily:"inherit"}}>Submit Another Report</button>
-          <button onClick={()=>setView("history")} style={{backgroundColor:"white",color:C.teal,border:`2px solid ${C.teal}`,borderRadius:12,padding:14,fontSize:16,fontWeight:800,cursor:"pointer",fontFamily:"inherit"}}>📋 View History & Export CSV</button>
+          <button onClick={()=>setView("history")} style={{backgroundColor:"white",color:"#0d3d4f",border:`2px solid ${C.teal}`,borderRadius:12,padding:14,fontSize:16,fontWeight:800,cursor:"pointer",fontFamily:"inherit"}}>📋 View History & Export CSV</button>
         </div>
       </div>
     </div>
@@ -749,7 +749,7 @@ function App() {
             <div style={card}>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
                 <div style={{fontWeight:900,fontSize:17}}>👥 Team Today</div>
-                <div style={{backgroundColor:C.tealLight,color:C.teal,borderRadius:20,padding:"5px 13px",fontWeight:800,fontSize:14}}>{totalHours}h total</div>
+                <div style={{backgroundColor:C.tealLight,color:"#0d3d4f",borderRadius:20,padding:"5px 13px",fontWeight:800,fontSize:14}}>{totalHours}h total</div>
               </div>
               {staff.map((s,i)=>(
                 <div key={i} style={{padding:"12px 0",borderBottom:i<staff.length-1?`1px solid ${C.border}`:"none"}}>
@@ -760,7 +760,7 @@ function App() {
                   </div>
                 </div>
               ))}
-              <button onClick={addStaff} style={{width:"100%",marginTop:12,padding:12,borderRadius:12,border:`2px dashed ${C.tealMid}`,backgroundColor:C.tealLight,color:C.teal,fontSize:15,fontWeight:800,cursor:"pointer",fontFamily:"inherit"}}>+ Add Person</button>
+              <button onClick={addStaff} style={{width:"100%",marginTop:12,padding:12,borderRadius:12,border:`2px dashed ${C.tealMid}`,backgroundColor:C.tealLight,color:"#0d3d4f",fontSize:15,fontWeight:800,cursor:"pointer",fontFamily:"inherit"}}>+ Add Person</button>
             </div>
           </div>
         )}
@@ -805,7 +805,7 @@ function App() {
               </div>
               <input type="range" min="1" max="10" value={busyness} onChange={e=>setBusyness(parseInt(e.target.value))} style={{width:"100%"}}/>
               <div style={{textAlign:"center",marginTop:10}}>
-                <span style={{fontWeight:900,fontSize:28,color:C.teal}}>{busyness}</span>
+                <span style={{fontWeight:900,fontSize:28,color:"#0d3d4f"}}>{busyness}</span>
                 <span style={{fontSize:16,fontWeight:700,color:C.muted,marginLeft:8}}>— {BUSYNESS_LABELS[busyness]}</span>
               </div>
             </div>
@@ -835,9 +835,9 @@ function App() {
           </div>
         )}
         <div style={{display:"flex",gap:10}}>
-        {step>1&&<button onClick={()=>{setStep(s=>s-1);setValidationError("");}} style={{flex:1,padding:14,borderRadius:12,border:`2px solid ${C.border}`,backgroundColor:"white",color:C.text,fontSize:15,fontWeight:800,cursor:"pointer",fontFamily:"inherit"}}>← Back</button>}
+        {step>1&&<button onClick={()=>{setStep(s=>s-1);setValidationError("");}} style={{flex:1,padding:14,borderRadius:12,border:"2px solid #e2e8f0",backgroundColor:"white",color:"#0f172a",fontSize:15,fontWeight:800,cursor:"pointer",fontFamily:"inherit"}}>← Back</button>}
         {step<3
-          ?<button onClick={handleNext} style={{flex:2,padding:14,borderRadius:12,border:"none",backgroundColor:C.teal,color:"white",fontSize:15,fontWeight:800,cursor:"pointer",fontFamily:"inherit"}}>Next →</button>
+          ?<button onClick={handleNext} style={{flex:2,padding:14,borderRadius:12,border:"none",backgroundColor:"#0d3d4f",color:"white",fontSize:15,fontWeight:800,cursor:"pointer",fontFamily:"inherit"}}>Next →</button>
           :<button onClick={handleSubmit} disabled={submitting} style={{flex:2,padding:14,borderRadius:12,border:"none",backgroundColor:submitting?"#94a3b8":C.pink,color:"white",fontSize:15,fontWeight:800,cursor:submitting?"not-allowed":"pointer",fontFamily:"inherit",transition:"background-color 0.2s"}}>
             {submitting?"⏳ Saving...":(editingKey?"💾 Save Changes":"✅ Submit Report")}
           </button>
