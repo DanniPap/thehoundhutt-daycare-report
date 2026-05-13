@@ -150,12 +150,12 @@ function RadarChart({ scores }) {
   const avg = (Object.values(scores).reduce((a,b)=>a+b,0)/Object.values(scores).length).toFixed(1);
   return (
     <svg viewBox="0 0 260 260" style={{width:"100%",maxWidth:280,display:"block",margin:"0 auto"}}>
-      {[2,4,6,8,10].map(l=><polygon key={l} points={gPts(l)} fill="none" stroke={l===10?"rgba(244,189,63,0.35)":"rgba(244,189,63,0.12)"} strokeWidth={l===10?1.5:1}/>)}
-      {WHEEL_CATS.map((_,i)=>{const a=angle(i);return <line key={i} x1={cx} y1={cy} x2={cx+maxR*Math.cos(a)} y2={cy+maxR*Math.sin(a)} stroke="rgba(244,189,63,0.15)" strokeWidth="1"/>;})}
-      <polygon points={dPts.map(p=>`${p.x},${p.y}`).join(" ")} fill="rgba(244,189,63,0.18)" stroke="#f4bd3f" strokeWidth="2.5" strokeLinejoin="round"/>
-      {dPts.map((p,i)=><circle key={i} cx={p.x} cy={p.y} r="4" fill="#f4bd3f"/>)}
+      {[2,4,6,8,10].map(l=><polygon key={l} points={gPts(l)} fill="none" stroke={l===10?"rgba(137,222,206,0.35)":"rgba(137,222,206,0.12)"} strokeWidth={l===10?1.5:1}/>)}
+      {WHEEL_CATS.map((_,i)=>{const a=angle(i);return <line key={i} x1={cx} y1={cy} x2={cx+maxR*Math.cos(a)} y2={cy+maxR*Math.sin(a)} stroke="rgba(137,222,206,0.15)" strokeWidth="1"/>;})}
+      <polygon points={dPts.map(p=>`${p.x},${p.y}`).join(" ")} fill="rgba(137,222,206,0.18)" stroke="#89DECE" strokeWidth="2.5" strokeLinejoin="round"/>
+      {dPts.map((p,i)=><circle key={i} cx={p.x} cy={p.y} r="4" fill="#89DECE"/>)}
       {WHEEL_CATS.map((cat,i)=>{const a=angle(i),lr=maxR+17;return <text key={i} x={cx+lr*Math.cos(a)} y={cy+lr*Math.sin(a)} textAnchor="middle" dominantBaseline="middle" fontSize="14">{cat.emoji}</text>;})}
-      <circle cx={cx} cy={cy} r={18} fill="#b8860b"/>
+      <circle cx={cx} cy={cy} r={18} fill="#2A7A9B"/>
       <text x={cx} y={cy-3} textAnchor="middle" dominantBaseline="middle" fontSize="13" fontWeight="900" fill="white">{avg}</text>
       <text x={cx} y={cy+10} textAnchor="middle" dominantBaseline="middle" fontSize="7" fill="rgba(255,255,255,0.75)">AVG</text>
     </svg>
@@ -164,7 +164,7 @@ function RadarChart({ scores }) {
 
 // ── Score Picker ──────────────────────────────────────────────────
 function ScorePicker({ value, onChange }) {
-  const col = s => s<=3?{border:"#fca5a5",active:"#ef4444"}:s<=5?{border:"#fcd34d",active:"#f59e0b"}:s<=7?{border:"#86efac",active:"#22c55e"}:{border:"#5eead4",active:"#f4bd3f"};
+  const col = s => s<=3?{border:"#fca5a5",active:"#ef4444"}:s<=5?{border:"#fcd34d",active:"#f59e0b"}:s<=7?{border:"#86efac",active:"#22c55e"}:{border:"#89DECE",active:"#89DECE"};
   return (
     <div style={{display:"flex",gap:4,justifyContent:"space-between"}}>
       {[2,3,4,5,6,7,8,9,10].map(s=>{
@@ -200,16 +200,16 @@ function generateReportHTML(r) {
   const sR = s=>Math.max(0,((s-2)/8)*maxR);
   const gPts = lv=>CATS.map((_,i)=>{const a=angle(i),r2=sR(lv);return `${cx+r2*Math.cos(a)},${cy+r2*Math.sin(a)}`;}).join(" ");
   const dPts = CATS.map((cat,i)=>{const a=angle(i),r2=sR(r.wheel[cat.key]||5);return {x:cx+r2*Math.cos(a),y:cy+r2*Math.sin(a)};});
-  const spokeLines = CATS.map((_,i)=>{const a=angle(i);return `<line x1="${cx}" y1="${cy}" x2="${cx+maxR*Math.cos(a)}" y2="${cy+maxR*Math.sin(a)}" stroke="rgba(244,189,63,0.2)" stroke-width="1"/>`;}).join("");
-  const gridPolys = [2,4,6,8,10].map(l=>`<polygon points="${gPts(l)}" fill="none" stroke="${l===10?"rgba(244,189,63,0.4)":"rgba(244,189,63,0.15)"}" stroke-width="${l===10?1.5:1}"/>`).join("");
-  const dataPath = `<polygon points="${dPts.map(p=>`${p.x},${p.y}`).join(" ")}" fill="rgba(244,189,63,0.2)" stroke="#f4bd3f" stroke-width="2.5" stroke-linejoin="round"/>`;
-  const dots = dPts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="5" fill="#f4bd3f"/>`).join("");
+  const spokeLines = CATS.map((_,i)=>{const a=angle(i);return `<line x1="${cx}" y1="${cy}" x2="${cx+maxR*Math.cos(a)}" y2="${cy+maxR*Math.sin(a)}" stroke="rgba(137,222,206,0.2)" stroke-width="1"/>`;}).join("");
+  const gridPolys = [2,4,6,8,10].map(l=>`<polygon points="${gPts(l)}" fill="none" stroke="${l===10?"rgba(137,222,206,0.4)":"rgba(137,222,206,0.15)"}" stroke-width="${l===10?1.5:1}"/>`).join("");
+  const dataPath = `<polygon points="${dPts.map(p=>`${p.x},${p.y}`).join(" ")}" fill="rgba(137,222,206,0.2)" stroke="#89DECE" stroke-width="2.5" stroke-linejoin="round"/>`;
+  const dots = dPts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="5" fill="#89DECE"/>`).join("");
   const emojiLabels = CATS.map((cat,i)=>{const a=angle(i),lr=maxR+22;return `<text x="${cx+lr*Math.cos(a)}" y="${cy+lr*Math.sin(a)}" text-anchor="middle" dominant-baseline="middle" font-size="16">${cat.emoji}</text>`;}).join("");
   const scoreLabels = CATS.map((cat,i)=>{const a=angle(i),lr=maxR+38;return `<text x="${cx+lr*Math.cos(a)}" y="${cy+lr*Math.sin(a)}" text-anchor="middle" dominant-baseline="middle" font-size="9" fill="#64748b" font-weight="bold">${r.wheel[cat.key]}</text>`;}).join("");
-  const radarSVG = `<svg viewBox="0 0 320 320" width="280" height="280" xmlns="http://www.w3.org/2000/svg">${gridPolys}${spokeLines}${dataPath}${dots}${emojiLabels}${scoreLabels}<circle cx="${cx}" cy="${cy}" r="24" fill="#b8860b"/><text x="${cx}" y="${cy-4}" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="900" fill="white">${wAvg}</text><text x="${cx}" y="${cy+11}" text-anchor="middle" dominant-baseline="middle" font-size="8" fill="rgba(255,255,255,0.8)">AVG</text></svg>`;
+  const radarSVG = `<svg viewBox="0 0 320 320" width="280" height="280" xmlns="http://www.w3.org/2000/svg">${gridPolys}${spokeLines}${dataPath}${dots}${emojiLabels}${scoreLabels}<circle cx="${cx}" cy="${cy}" r="24" fill="#2A7A9B"/><text x="${cx}" y="${cy-4}" text-anchor="middle" dominant-baseline="middle" font-size="16" font-weight="900" fill="white">${wAvg}</text><text x="${cx}" y="${cy+11}" text-anchor="middle" dominant-baseline="middle" font-size="8" fill="rgba(255,255,255,0.8)">AVG</text></svg>`;
 
-  const scoreColor = s=>s<=3?"#ef4444":s<=5?"#f59e0b":s<=7?"#22c55e":"#f4bd3f";
-  const scoreBg = s=>s<=3?"#fef2f2":s<=5?"#fffbeb":s<=7?"#f0fdf4":"#f0fdfa";
+  const scoreColor = s=>s<=3?"#ef4444":s<=5?"#f59e0b":s<=7?"#22c55e":"#89DECE";
+  const scoreBg = s=>s<=3?"#fef2f2":s<=5?"#fffbeb":s<=7?"#f0fdf4":"#FFF2CC";
 
   const wheelRows = CATS.map(cat=>`
     <tr>
@@ -237,7 +237,7 @@ function generateReportHTML(r) {
   ].map(([label,emoji,val])=>`
     <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f1f5f9;">
       <span style="font-size:13px;font-weight:600;">${emoji} ${label}</span>
-      <span style="font-size:15px;font-weight:900;color:#b8860b;">${val??0}</span>
+      <span style="font-size:15px;font-weight:900;color:#2A7A9B;">${val??0}</span>
     </div>`).join("");
 
   return `<!DOCTYPE html>
@@ -250,7 +250,7 @@ function generateReportHTML(r) {
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Nunito','Segoe UI',sans-serif;background:#fff;color:#0f172a;padding:0}
   .page{max-width:760px;margin:0 auto;padding:32px 28px}
-  .header{background:#b8860b;color:white;border-radius:14px;padding:20px 24px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center}
+  .header{background:#2A7A9B;color:white;border-radius:14px;padding:20px 24px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center}
   .header-left h1{font-size:22px;font-weight:900;letter-spacing:0.5px}
   .header-left p{font-size:12px;opacity:0.75;font-weight:700;letter-spacing:1px;margin-top:2px}
   .header-right{text-align:right}
@@ -292,7 +292,7 @@ function generateReportHTML(r) {
 
   <div class="stat-row">
     <div class="stat" style="background:#f0fdf4;"><div class="val" style="color:#16a34a">${wAvg}</div><div class="lbl" style="color:#16a34a">WHEEL AVG</div></div>
-    <div class="stat" style="background:#f0fdfa;"><div class="val" style="color:#b8860b">${r.busyness.score}</div><div class="lbl" style="color:#b8860b">LEVEL OF BUSY — ${r.busyness.label}</div></div>
+    <div class="stat" style="background:#FFF2CC;"><div class="val" style="color:#2A7A9B">${r.busyness.score}</div><div class="lbl" style="color:#2A7A9B">LEVEL OF BUSY — ${r.busyness.label}</div></div>
     <div class="stat" style="background:#fdf4ff;"><div class="val" style="color:#9333ea">${r.totalHours}</div><div class="lbl" style="color:#9333ea">TOTAL HOURS</div></div>
   </div>
 
@@ -356,8 +356,8 @@ function ReportDetailScreen({ report: r, onBack }) {
   const SLABELS = {2:"2",3:"Bad",4:"Poor",5:"Okay",6:"Good",7:"Great",8:"Excellent",9:"Outstanding",10:"Perfection"};
   const wAvg = (Object.values(r.wheel).reduce((a,b)=>a+b,0)/10).toFixed(1);
   const dateStr = safeDateStr(r.date);
-  const scoreColor = s=>s<=3?"#ef4444":s<=5?"#f59e0b":s<=7?"#22c55e":"#f4bd3f";
-  const C = {teal:"#b8860b",pink:"#E3A825",muted:"#64748b",border:"#e8edf2"};
+  const scoreColor = s=>s<=3?"#ef4444":s<=5?"#f59e0b":s<=7?"#22c55e":"#89DECE";
+  const C = {teal:"#2A7A9B",pink:"#F4BD3F",muted:"#64748b",border:"#e8edf2"};
 
   // Mini radar
   const cx=90,cy=90,maxR=68,n=10;
@@ -405,7 +405,7 @@ function ReportDetailScreen({ report: r, onBack }) {
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:8}}>
           {[
             {val:wAvg,lbl:"WHEEL AVG",bg:"#f0fdf4",col:"#16a34a"},
-            {val:`${r.busyness.score} — ${r.busyness.label}`,lbl:"LEVEL OF BUSY",bg:"#f0fdfa",col:C.teal},
+            {val:`${r.busyness.score} — ${r.busyness.label}`,lbl:"LEVEL OF BUSY",bg:"#FFF2CC",col:C.teal},
           ].map((s,i)=>(
             <div key={i} style={{backgroundColor:s.bg,borderRadius:8,padding:"7px 8px",textAlign:"center"}}>
               <div style={{fontWeight:900,fontSize:i===1?12:20,color:s.col,lineHeight:1.1}}>{s.val}</div>
@@ -451,12 +451,12 @@ function ReportDetailScreen({ report: r, onBack }) {
             <div style={{backgroundColor:"#f8fafc",borderRadius:8,padding:"8px 10px",textAlign:"center"}}>
               <div style={{fontSize:9,fontWeight:900,color:"#94a3b8",letterSpacing:"0.8px",textTransform:"uppercase",marginBottom:4}}>🎡 Wheel</div>
               <svg viewBox="0 0 180 180" width="100%" style={{maxWidth:160,display:"block",margin:"0 auto"}}>
-                {[2,5,8,10].map(l=><polygon key={l} points={gPts(l)} fill="none" stroke={l===10?"rgba(244,189,63,0.4)":"rgba(244,189,63,0.12)"} strokeWidth="1"/>)}
-                {CATS.map((_,i)=>{const a=ang(i);return <line key={i} x1={cx} y1={cy} x2={cx+maxR*Math.cos(a)} y2={cy+maxR*Math.sin(a)} stroke="rgba(244,189,63,0.15)" strokeWidth="0.8"/>;} )}
-                <polygon points={dPts.map(p=>`${p.x},${p.y}`).join(" ")} fill="rgba(244,189,63,0.2)" stroke="#f4bd3f" strokeWidth="2" strokeLinejoin="round"/>
-                {dPts.map((p,i)=><circle key={i} cx={p.x} cy={p.y} r="3" fill="#f4bd3f"/>)}
+                {[2,5,8,10].map(l=><polygon key={l} points={gPts(l)} fill="none" stroke={l===10?"rgba(137,222,206,0.4)":"rgba(137,222,206,0.12)"} strokeWidth="1"/>)}
+                {CATS.map((_,i)=>{const a=ang(i);return <line key={i} x1={cx} y1={cy} x2={cx+maxR*Math.cos(a)} y2={cy+maxR*Math.sin(a)} stroke="rgba(137,222,206,0.15)" strokeWidth="0.8"/>;} )}
+                <polygon points={dPts.map(p=>`${p.x},${p.y}`).join(" ")} fill="rgba(137,222,206,0.2)" stroke="#89DECE" strokeWidth="2" strokeLinejoin="round"/>
+                {dPts.map((p,i)=><circle key={i} cx={p.x} cy={p.y} r="3" fill="#89DECE"/>)}
                 {CATS.map((cat,i)=>{const a=ang(i),lr=maxR+13;return <text key={i} x={cx+lr*Math.cos(a)} y={cy+lr*Math.sin(a)} textAnchor="middle" dominantBaseline="middle" fontSize="10">{cat.emoji}</text>;})}
-                <circle cx={cx} cy={cy} r="16" fill="#b8860b"/>
+                <circle cx={cx} cy={cy} r="16" fill="#2A7A9B"/>
                 <text x={cx} y={cy-2} textAnchor="middle" dominantBaseline="middle" fontSize="11" fontWeight="900" fill="white">{wAvg}</text>
                 <text x={cx} y={cy+9} textAnchor="middle" dominantBaseline="middle" fontSize="6" fill="rgba(255,255,255,0.75)">AVG</text>
               </svg>
@@ -489,12 +489,12 @@ function ReportDetailScreen({ report: r, onBack }) {
 
 // ── History Screen ────────────────────────────────────────────────
 function HistoryScreen({ reports, onBack, onEdit }) {
-  const C = { teal:"#b8860b", pink:"#E3A825", muted:"#64748b", border:"#e2e8f0", text:"#0f172a" };
+  const C = { teal:"#2A7A9B", pink:"#F4BD3F", muted:"#64748b", border:"#e2e8f0", text:"#0f172a" };
   const sorted = [...reports].sort((a,b)=>b.date.localeCompare(a.date));
   const [selected, setSelected] = useState(null);
   if (selected) return <ReportDetailScreen report={selected} onBack={()=>setSelected(null)}/>;
   return (
-    <div style={{fontFamily:"'Nunito','Segoe UI',sans-serif",backgroundColor:"#f0fdfa",minHeight:"100vh",color:C.text}}>
+    <div style={{fontFamily:"'Nunito','Segoe UI',sans-serif",backgroundColor:"#FFF2CC",minHeight:"100vh",color:C.text}}>
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap'); *{box-sizing:border-box}`}</style>
       <div style={{backgroundColor:C.teal,padding:"18px 16px",color:"white",position:"sticky",top:0,zIndex:10}}>
         <div style={{display:"flex",alignItems:"center",gap:12}}>
@@ -535,7 +535,7 @@ function HistoryScreen({ reports, onBack, onEdit }) {
                     <div style={{fontWeight:900,fontSize:18,color:"#16a34a"}}>{wAvg}</div>
                     <div style={{fontSize:9,color:C.muted,fontWeight:700}}>WHEEL</div>
                   </div>
-                  <div style={{backgroundColor:"#f0fdfa",borderRadius:10,padding:"6px 10px",textAlign:"center"}}>
+                  <div style={{backgroundColor:"#FFF2CC",borderRadius:10,padding:"6px 10px",textAlign:"center"}}>
                     <div style={{fontWeight:900,fontSize:18,color:C.teal}}>{r.busyness.score}</div>
                     <div style={{fontSize:9,color:C.muted,fontWeight:700}}>BUSY</div>
                   </div>
@@ -554,7 +554,7 @@ function HistoryScreen({ reports, onBack, onEdit }) {
               </div>
               {r.notes&&<div style={{marginTop:10,fontSize:13,color:C.muted,fontStyle:"italic",borderTop:`1px solid ${C.border}`,paddingTop:8}}>"{r.notes}"</div>}
               <div style={{marginTop:12,borderTop:`1px solid ${C.border}`,paddingTop:10,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                <button onClick={e=>{e.stopPropagation();onEdit(r);}} style={{backgroundColor:"#f0fdfa",border:`1.5px solid #f4bd3f`,borderRadius:8,padding:"7px 14px",color:"#b8860b",fontWeight:800,fontSize:12,cursor:"pointer",fontFamily:"inherit"}}>✏️ Edit</button>
+                <button onClick={e=>{e.stopPropagation();onEdit(r);}} style={{backgroundColor:"#FFF2CC",border:`1.5px solid #89DECE`,borderRadius:8,padding:"7px 14px",color:"#2A7A9B",fontWeight:800,fontSize:12,cursor:"pointer",fontFamily:"inherit"}}>✏️ Edit</button>
                 <span style={{fontSize:12,fontWeight:800,color:C.pink,display:"flex",alignItems:"center",gap:4}}>📄 Tap to view report →</span>
               </div>
             </div>
@@ -682,7 +682,7 @@ function App() {
   if (view==="history") return <HistoryScreen reports={reports} onBack={()=>setView("form")} onEdit={startEdit}/>;
   if (view==="detail" && lastReport) return <ReportDetailScreen report={lastReport} onBack={()=>{setView("form");setSubmitted(true);}}/>;
 
-  const C={teal:"#b8860b",tealMid:"#f4bd3f",tealLight:"#fef9e7",pink:"#E3A825",bg:"#f0fdfa",card:"#ffffff",text:"#0f172a",muted:"#64748b",border:"#e2e8f0"};
+  const C={teal:"#2A7A9B",tealMid:"#89DECE",tealLight:"#C4E9F4",pink:"#F4BD3F",bg:"#FFF2CC",card:"#ffffff",text:"#0f172a",muted:"#64748b",border:"#e2e8f0"};
   const card={backgroundColor:C.card,borderRadius:16,padding:"18px 16px",boxShadow:"0 1px 8px rgba(0,0,0,0.06),0 0 0 1px rgba(0,0,0,0.03)",marginBottom:12};
   const inp={border:`1.5px solid ${C.border}`,borderRadius:10,padding:"10px 14px",fontSize:16,fontFamily:"inherit",width:"100%",outline:"none",boxSizing:"border-box",backgroundColor:"white",color:C.text};
   const pct=step===1?33:step===2?66:100;
@@ -711,7 +711,7 @@ function App() {
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
         *{box-sizing:border-box}
         input[type=range]{-webkit-appearance:none;width:100%;height:8px;border-radius:4px;background:#e2e8f0;outline:none;cursor:pointer}
-        input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#f4bd3f;cursor:pointer;box-shadow:0 2px 8px rgba(244,189,63,0.5)}
+        input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#89DECE;cursor:pointer;box-shadow:0 2px 8px rgba(137,222,206,0.5)}
         input[type=number]{-moz-appearance:textfield}
         input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
         button{touch-action:manipulation}
